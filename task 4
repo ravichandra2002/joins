@@ -1,0 +1,395 @@
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL
+);
+
+-- Create the customers table
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(255) NOT NULL
+);
+
+INSERT INTO products (product_id, product_name) VALUES
+(1, 'Laptop'),
+(2, 'Smartphone'),
+(3, 'Tablet');
+
+INSERT INTO customers (customer_id, customer_name) VALUES
+(1, 'Alice'),
+(2, 'Bob'),
+(3, 'Charlie');
+
+SELECT 
+    p.product_name,
+    c.customer_name
+FROM 
+    products p
+CROSS JOIN 
+    customers c;
+
+-- Create the customers table
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(255) NOT NULL
+);
+
+-- Create the orders table
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+INSERT INTO customers (customer_id, customer_name) VALUES
+(1, 'ravi'),
+(2, 'Bob'),
+(3, 'Charlie');
+
+INSERT INTO orders (order_id, customer_id, order_date) VALUES
+(1, 1, '2023-01-15'),  -- Alice's order
+(2, 1, '2023-02-20'),  -- Alice's order
+(3, 2, '2023-03-10');  -- Bob's order
+
+SELECT 
+    c.customer_id,
+    c.customer_name,
+    o.order_id,
+    o.order_date
+FROM 
+    customers c
+NATURAL JOIN 
+    orders o;
+    
+    -- Create the customers table
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(255) NOT NULL
+);
+
+-- Create the orders table
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    product_id INT,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+
+INSERT INTO customers (customer_id, customer_name) VALUES
+(1, 'Alice'),
+(2, 'Bob'),
+(3, 'Charlie');
+
+INSERT INTO orders (order_id, customer_id, product_id) VALUES
+(1, 1, 101),  -- Alice ordered product 101
+(2, 1, 102),  -- Alice ordered product 102
+(3, 2, 101),  -- Bob ordered product 101
+(4, 2, 103),  -- Bob ordered product 103
+(5, 3, 104);  -- Charlie ordered product 104
+
+SELECT 
+    c.customer_name,
+    COUNT(o.product_id) AS total_products_ordered
+FROM 
+    customers c
+JOIN 
+    orders o ON c.customer_id = o.customer_id
+GROUP BY 
+    c.customer_name;
+
+
+-- Create the customers table
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(255) NOT NULL
+);
+
+-- Create the products table
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL
+);
+
+-- Create the orders table
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    product_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id),
+    FOREIGN KEY (product_id) REFERENCES products(product_id)
+);
+INSERT INTO customers (customer_id, customer_name) VALUES
+(1, 'Alice'),
+(2, 'Bob'),
+(3, 'Charlie');
+
+INSERT INTO products (product_id, product_name) VALUES
+(101, 'Laptop'),
+(102, 'Smartphone'),
+(103, 'Tablet');
+
+INSERT INTO orders (order_id, customer_id, product_id, order_date) VALUES
+(1, 1, 101, '2023-01-15'),  -- Alice ordered Laptop
+(2, 1, 102, '2023-02-20'),  -- Alice ordered Smartphone
+(3, 2, 101, '2023-03-10'),  -- Bob ordered Laptop
+(4, 2, 103, '2023-03-15'),  -- Bob ordered Tablet
+(5, 3, 102, '2023-04-01');  -- Charlie ordered Smartphone
+
+SELECT 
+    c.customer_name,
+    p.product_name,
+    o.order_date
+FROM 
+    orders o
+JOIN 
+    customers c ON o.customer_id = c.customer_id
+JOIN 
+    products p ON o.product_id = p.product_id;
+
+CREATE TABLE authors (
+    author_id INT PRIMARY KEY,
+    author_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE books (
+    book_id INT PRIMARY KEY,
+    book_title VARCHAR(255) NOT NULL,
+    author_id INT,
+    FOREIGN KEY (author_id) REFERENCES authors(author_id)  
+);
+
+INSERT INTO authors (author_id, author_name) VALUES
+(1, 'George Orwell'),
+(2, 'J.K. Rowling'),
+(3, 'J.R.R. Tolkien');
+
+INSERT INTO books (book_id, book_title, author_id) VALUES
+(1, '1984', 1),               
+(2, 'Harry Potter and the Philosopher\'s Stone', 2), 
+(3, 'The Hobbit', 3);    
+
+select *from authors     
+
+CREATE TABLE categories (
+    category_id INT PRIMARY KEY,
+    category_name VARCHAR(255) NOT NULL
+);
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(255) NOT NULL,
+    category_id INT,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
+);
+INSERT INTO categories (category_id, category_name) VALUES
+(1, 'Electronics'),
+(2, 'Books'),
+(3, 'Clothing');
+INSERT INTO products (product_id, product_name, category_id) VALUES
+(1, 'Laptop', 1),       -- Product in Electronics
+(2, 'Smartphone', 1),   -- Product in Electronics
+(3, 'Novel', 2),        -- Product in Books
+(4, 'T-Shirt', 3);      -- Product in Clothing
+
+select *from categories
+
+drop database task
+create database task
+use task
+CREATE TABLE customers (
+    customer_id INT PRIMARY KEY,
+    customer_name VARCHAR(100) NOT NULL
+);
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    customer_id INT,
+    order_date DATE,
+    FOREIGN KEY (customer_id) REFERENCES customers(customer_id)
+);
+INSERT INTO customers (customer_id, customer_name) 
+VALUES
+(1, 'Alex'),
+(2, 'Bapu'),
+(3, 'Charlie');
+
+INSERT INTO orders (order_id, customer_id, order_date) VALUES
+(1, 4, '2024-10-08');
+
+Alter table customers
+select * from orders
+INSERT INTO customers (customer_id, customer_name) 
+VALUES
+(4, 'Jack');
+
+CREATE TABLE users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL UNIQUE
+);
+CREATE TABLE users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_name VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL,
+    UNIQUE (email)
+);
+INSERT INTO users (user_name, email) VALUES ('Alice Johnson', 'alice@example.com');
+INSERT INTO users (user_name, email) VALUES ('Bob Smith', 'bob@example.com');
+INSERT INTO users (user_name, email) VALUES ('Charlie Brown', 'charlie@example.com');
+INSERT INTO users (user_name, email) VALUES ('Diana Prince', 'diana@example.com');
+
+select *from users
+
+CREATE TABLE products (
+    product_id INT PRIMARY KEY AUTO_INCREMENT,
+    product_name VARCHAR(255) NOT NULL,
+    price DECIMAL(10, 2) NOT NULL CHECK (price > 0)
+);
+INSERT INTO products (product_name, price) VALUES ('Laptop', 999.99);
+INSERT INTO products (product_name, price) VALUES ('Smartphone', 499.50);
+INSERT INTO products (product_name, price) VALUES ('Headphones', 89.99);
+INSERT INTO products (product_name, price) VALUES ('Smartwatch', 199.99);
+
+SELECT * FROM products;
+
+CREATE TABLE courses (
+    course_id INT NOT NULL,
+    course_name VARCHAR(255) NOT NULL,
+    department_id INT NOT NULL,
+    PRIMARY KEY (course_id, department_id)
+);
+
+INSERT INTO courses (course_id, course_name, department_id) VALUES (101, 'Introduction to Programming', 1);
+INSERT INTO courses (course_id, course_name, department_id) VALUES (102, 'Data Structures', 1);
+INSERT INTO courses (course_id, course_name, department_id) VALUES (201, 'Calculus I', 2);
+INSERT INTO courses (course_id, course_name, department_id) VALUES (202, 'Linear Algebra', 2);
+
+select *from courses
+
+CREATE TABLE students (
+    student_id INT PRIMARY KEY AUTO_INCREMENT,
+    student_name VARCHAR(255) NOT NULL
+);
+
+CREATE TABLE courses (
+    course_id INT NOT NULL,
+    course_name VARCHAR(255) NOT NULL,
+    PRIMARY KEY (course_id)
+);
+CREATE TABLE student_courses (
+    student_id INT NOT NULL,
+    course_id INT NOT NULL,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+-- Insert sample data into students
+INSERT INTO students (student_name) VALUES ('John Doe');
+INSERT INTO students (student_name) VALUES ('Jane Smith');
+
+-- Insert sample data into courses
+INSERT INTO courses (course_id, course_name) VALUES (101, 'Introduction to Programming');
+INSERT INTO courses (course_id, course_name) VALUES (102, 'Data Structures');
+
+-- Insert values into student_courses
+INSERT INTO student_courses (student_id, course_id) VALUES (1, 101);
+INSERT INTO student_courses (student_id, course_id) VALUES (1, 102);
+INSERT INTO student_courses (student_id, course_id) VALUES (2, 101);
+
+select *from student_courses
+
+CREATE TABLE users (
+    user_id INT PRIMARY KEY AUTO_INCREMENT,
+    username VARCHAR(255) NOT NULL,
+    email VARCHAR(255) NOT NULL
+);
+INSERT INTO users (username, email) VALUES ('Alice', 'alice@example.com');
+INSERT INTO users (username, email) VALUES ('Bob', 'bob@example.com');
+
+select *from users
+
+
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY AUTO_INCREMENT,
+    employee_name VARCHAR(255) NOT NULL,
+    salary DECIMAL(10, 2) NOT NULL
+);
+
+ALTER TABLE employees
+ADD CONSTRAINT chk_salary_positive CHECK (salary > 0);
+
+INSERT INTO employees (employee_name, salary) VALUES ('John Doe', 50000.00);
+INSERT INTO employees (employee_name, salary) VALUES ('Jane Smith', 60000.00);
+
+select *from employees
+drop database task
+create database task
+use task
+
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    student_name VARCHAR(100) NOT NULL
+);
+CREATE TABLE courses (
+    course_id INT PRIMARY KEY,
+    course_name VARCHAR(100) NOT NULL
+);
+
+
+CREATE TABLE student_courses (
+    student_id INT NOT NULL,
+    course_id INT NOT NULL,
+    PRIMARY KEY (student_id, course_id),
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+INSERT INTO students (student_id, student_name) VALUES
+(1, 'Alice Smith'),
+(2, 'Bob Johnson'),
+(3, 'Charlie Brown');
+INSERT INTO courses (course_id, course_name) VALUES
+(101, 'Mathematics'),
+(102, 'History'),
+(103, 'Computer Science');
+INSERT INTO student_courses (student_id, course_id) VALUES (1, 101);
+INSERT INTO student_courses (student_id, course_id) VALUES (1, 102);
+INSERT INTO student_courses (student_id, course_id) VALUES (2, 101);
+INSERT INTO student_courses (student_id, course_id) VALUES (2, 103);
+
+CREATE TABLE employees (
+    employee_id INT PRIMARY KEY,
+    employee_name VARCHAR(100),
+    department_id INT
+);
+CREATE TABLE departments (
+    department_id INT PRIMARY KEY,
+    department_name VARCHAR(100)
+);
+
+select * from employees e 
+left join departments d
+on e.department_id = d.department_id
+union 
+select * from employees e 
+right join departments d
+on e.department =d.department_id;
+
+-- Inserting data into departments
+INSERT INTO departments (department_id, department_name) VALUES (1, 'Sales');
+INSERT INTO departments (department_id, department_name) VALUES (2, 'Marketing');
+INSERT INTO departments (department_id, department_name) VALUES (3, 'HR');
+
+-- Inserting data into employees
+INSERT INTO employees (employee_id, employee_name, department_id) VALUES (1, 'Alice', 1);
+INSERT INTO employees (employee_id, employee_name, department_id) VALUES (2, 'Bob', 2);
+INSERT INTO employees (employee_id, employee_name, department_id) VALUES (3, 'Charlie', NULL);  -- No department
+INSERT INTO employees (employee_id, employee_name, department_id) VALUES (4, 'David', 3);
+
+CREATE TABLE categories (
+    category_id INT PRIMARY KEY,
+    category_name VARCHAR(100)
+);
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    product_name VARCHAR(100),
+    category_id INT,
+    FOREIGN KEY (category_id) REFERENCES categories(category_id) ON DELETE CASCADE
+);
